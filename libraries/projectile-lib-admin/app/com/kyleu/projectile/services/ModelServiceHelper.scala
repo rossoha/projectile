@@ -49,7 +49,7 @@ abstract class ModelServiceHelper[T](val key: String, val perm: (String, String)
   protected def fieldVal(fields: Seq[DataField], k: String) = fieldValOpt(fields, k).getOrElse(NullUtils.str)
 
   def checkPerm[Ret](creds: Credentials, key: String)(f: => Ret): Ret = PermissionService.check(creds.role, perm._1, perm._2, key) match {
-    case (false, msg) => throw new IllegalStateException(s"Insufficent permissions to access [${perm._1}, ${perm._2}, $key]: $msg")
+    case (false, msg) => throw new IllegalStateException(s"Insufficient permissions to access [${perm._1}, ${perm._2}, $key]: $msg")
     case (true, _) => f
   }
 }

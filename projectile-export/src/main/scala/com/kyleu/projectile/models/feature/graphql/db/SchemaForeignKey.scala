@@ -20,7 +20,8 @@ object SchemaForeignKey {
             val fn = s"${src.propertyName}By${srcCol.className}Fetcher"
             file.addMarkers("fetcher", (src.graphqlPackage(config) :+ s"${src.className}Schema" :+ fn).mkString(".") -> "n/a")
             file.add(s"val $fn = Fetcher { (c: GraphQLContext, values: Seq[$idType]) =>", 1)
-            file.add(s"c.${src.injectedService(config)}.getBy${srcCol.className}Seq(c.creds, values)(c.trace)")
+            val valuesArg = if (srcCol.required) "values" else "values.flatten"
+            file.add(s"c.${src.injectedService(config)}.getBy${srcCol.className}Seq(c.creds, $valuesArg)(c.trace)")
             file.add(s"}(HasId[${src.className}, $idType](_.${srcCol.propertyName}))", -1)
             file.add()
           } else {
