@@ -45,6 +45,7 @@ class SocialAuthController @javax.inject.Inject() (
                   val newUser = SystemUser(
                     id = UUID.randomUUID,
                     username = if (existing.isDefined) { username + "-" + scala.util.Random.alphanumeric.take(4).mkString } else { username },
+                    phone = existing.map(_.phone).getOrElse(""),
                     profile = LoginCredentials(profile.loginInfo.providerID, profile.loginInfo.providerKey),
                     role = configProvider.defaultRole,
                     settings = configProvider.defaultSettings

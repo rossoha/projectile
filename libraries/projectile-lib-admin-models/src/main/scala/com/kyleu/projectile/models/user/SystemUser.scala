@@ -16,6 +16,7 @@ object SystemUser {
   def empty() = SystemUser(
     id = UUID.randomUUID,
     username = "",
+    phone = "",
     profile = LoginCredentials("anonymous", "guest"),
     role = "user"
   )
@@ -23,6 +24,7 @@ object SystemUser {
   val system = SystemUser(
     id = UUID.fromString("88888888-8888-8888-8888-888888888888"),
     username = "",
+    phone = "",
     profile = LoginCredentials("anonymous", "system"),
     role = "admin"
   )
@@ -30,6 +32,7 @@ object SystemUser {
   val guest = SystemUser(
     id = UUID.fromString("77777777-7777-7777-7777-777777777777"),
     username = "guest",
+    phone = "",
     profile = LoginCredentials("anonymous", "guest"),
     role = "user"
   )
@@ -37,6 +40,7 @@ object SystemUser {
   val api = SystemUser(
     id = UUID.fromString("44444444-4444-4444-4444-444444444444"),
     username = "api",
+    phone = "",
     profile = LoginCredentials("anonymous", "api"),
     role = "admin"
   )
@@ -45,6 +49,7 @@ object SystemUser {
 final case class SystemUser(
     id: UUID,
     username: String,
+    phone: String,
     profile: LoginCredentials,
     role: String,
     settings: Json = JsonObject.empty.asJson,
@@ -62,11 +67,16 @@ final case class SystemUser(
   override def toDataFields = Seq(
     DataField("id", Some(id.toString)),
     DataField("username", Some(username)),
+    DataField("phone", Some(phone)),
     DataField("provider", Some(profile.providerID)),
     DataField("key", Some(profile.providerKey)),
-    DataField("role", Some(role.toString)),
+    DataField("role", Some(role)),
     DataField("created", Some(created.toString))
   )
 
-  def toSummary = DataSummary(model = "systemUser", pk = id.toString, entries = Map("Username" -> Some(username), "Role" -> Some(role.toString)))
+  def toSummary =
+    DataSummary(
+      model = "systemUser",
+      pk = id.toString,
+      entries = Map("Username" -> Some(username), "Phone" -> Some(phone), "Role" -> Some(role)))
 }

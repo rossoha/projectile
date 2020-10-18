@@ -12,12 +12,14 @@ object UserForms {
 
   val registrationForm = Form(mapping(
     "username" -> nonEmptyText,
+    "phone" -> Constraints.phone,
     "email" -> nonEmptyText,
     "password" -> nonEmptyText
   )(RegistrationData.apply)(RegistrationData.unapply))
 
   val profileForm = Form(mapping(
     "username" -> nonEmptyText,
+    "phone" -> Constraints.phone,
     "theme" -> nonEmptyText,
 
     "menuColor" -> text,

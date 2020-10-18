@@ -151,6 +151,9 @@ class SystemUserService @javax.inject.Inject() (
   )(implicit trace: TraceData) = traceF("get.by.username") { td =>
     db.queryF(SystemUserQueries.GetByUsername(username, orderBys, limit, offset), conn)(td)
   }
+  def getByPhone(creds: Credentials, phone: String, orderBys: Seq[OrderBy] = Nil, limit: Option[Int] = None, offset: Option[Int] = None, conn: Option[Connection] = None)(implicit trace: TraceData) = traceF("get.by.phone") { td =>
+    db.queryF(SystemUserQueries.GetByPhone(phone, orderBys, limit, offset), conn)(td)
+  }
   def getByUsernameSeq(creds: Credentials, usernameSeq: Seq[String], conn: Option[Connection] = None)(implicit trace: TraceData) = if (usernameSeq.isEmpty) {
     Future.successful(Nil)
   } else {

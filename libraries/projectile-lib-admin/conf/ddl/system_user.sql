@@ -1,6 +1,7 @@
 create table if not exists "system_user" (
   "id" uuid primary key,
   "username" character varying(256) unique,
+  "phone" character varying(48) unique,
   "provider" character varying(64) not null,
   "key" varchar(2048) not null,
   "role" character varying(64) not null,

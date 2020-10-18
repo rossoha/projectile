@@ -16,6 +16,7 @@ object SystemUserQueries extends BaseQueries[SystemUser]("systemUser", "system_u
   override val fields = Seq(
     DatabaseField(title = "Id", prop = "id", col = "id", typ = UuidType),
     DatabaseField(title = "Username", prop = "username", col = "username", typ = StringType),
+    DatabaseField(title = "Phone", prop = "phone", col = "phone", typ = StringType),
     DatabaseField(title = "Provider", prop = "provider", col = "provider", typ = StringType),
     DatabaseField(title = "Key", prop = "key", col = "key", typ = StringType),
     DatabaseField(title = "Role", prop = "role", col = "role", typ = StringType),
@@ -86,7 +87,10 @@ object SystemUserQueries extends BaseQueries[SystemUser]("systemUser", "system_u
     limit = limit, offset = offset, values = Seq(username)
   )
   final case class GetByUsernameSeq(usernameSeq: Seq[String]) extends ColSeqQuery(column = "username", values = usernameSeq)
-
+  final case class GetByPhone(phone: String, orderBys: Seq[OrderBy] = Nil, limit: Option[Int] = None, offset: Option[Int] = None) extends SeqQuery(
+    whereClause = Some(quote("phone") + "  = ?"), orderBy = ResultFieldHelper.orderClause(fields, orderBys: _*),
+    limit = limit, offset = offset, values = Seq(phone)
+  )
   def insert(model: SystemUser) = new Insert(model)
   def insertBatch(models: Seq[SystemUser]) = new InsertBatch(models)
   def create(dataFields: Seq[DataField]) = new InsertFields(dataFields)
@@ -98,14 +102,15 @@ object SystemUserQueries extends BaseQueries[SystemUser]("systemUser", "system_u
   override protected def fromRow(row: Row) = {
     val id = UuidType(row, "id")
     val username = StringType(row, "username")
+    val phone = StringType(row, "phone")
     val profile = LoginCredentials(StringType(row, "provider"), StringType(row, "key"))
     val role = StringType(row, "role")
     val settings = JsonType(row, "settings")
     val created = TimestampType(row, "created")
-    SystemUser(id, username, profile, role, settings, created)
+    SystemUser(id, username, phone, profile, role, settings, created)
   }
 
   override protected def toDataSeq(u: SystemUser) = Seq[Any](
-    u.id.toString, u.username, u.profile.providerID, u.profile.providerKey, u.role.toString, u.settings, u.created
+    u.id.toString, u.username, u.phone, u.profile.providerID, u.profile.providerKey, u.role.toString, u.settings, u.created
   )
 }

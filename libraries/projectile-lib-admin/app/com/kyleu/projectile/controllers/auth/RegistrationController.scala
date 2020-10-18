@@ -56,6 +56,7 @@ class RegistrationController @javax.inject.Inject() (
             val user = SystemUser(
               id = UUID.randomUUID,
               username = data.username,
+              phone = data.phone,
               profile = LoginCredentials(loginInfo.providerID, loginInfo.providerKey),
               role = role,
               settings = configProvider.defaultSettings

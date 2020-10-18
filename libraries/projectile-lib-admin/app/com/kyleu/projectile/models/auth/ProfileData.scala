@@ -19,6 +19,7 @@ object ProfileData {
 
 final case class ProfileData(
     username: String = "",
+    phone: String = "",
     theme: String = "",
 
     menuColor: String = "",

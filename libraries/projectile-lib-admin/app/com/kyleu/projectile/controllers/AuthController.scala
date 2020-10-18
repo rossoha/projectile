@@ -79,6 +79,7 @@ abstract class AuthController(name: String) extends com.kyleu.projectile.control
     user.foreach { u =>
       trace.tag("user.id", u.id.toString)
       trace.tag("user.username", u.username)
+      trace.tag("user.phone", u.phone)
       trace.tag("user.email", u.profile.providerKey)
       trace.tag("user.role", u.role.toString)
     }

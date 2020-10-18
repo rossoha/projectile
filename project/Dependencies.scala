@@ -6,7 +6,7 @@ object Dependencies {
     val filters = play.sbt.PlayImport.filters
     val cache = play.sbt.PlayImport.ehcache
     val guice = play.sbt.PlayImport.guice
-    val mailer = "com.typesafe.play" %% "play-mailer-guice" % "7.0.1"
+    val mailer = "com.typesafe.play" %% "play-mailer-guice" % "8.0.1"
     val twirl = "com.typesafe.play" %% "twirl-api" % "1.5.0"
     val ws = play.sbt.PlayImport.ws
 
@@ -14,7 +14,7 @@ object Dependencies {
   }
 
   object Database {
-    val postgres = "org.postgresql" % "postgresql" % "42.2.14"
+    val postgres = "org.postgresql" % "postgresql" % "42.2.17"
     val hikariCp = "com.zaxxer" % "HikariCP" % "3.4.5"
     val flyway = "org.flywaydb" % "flyway-core" % "5.2.4"
 
@@ -44,8 +44,8 @@ object Dependencies {
   }
 
   object GraphQL {
-    val sangria = "com.kyleu" %% "sangria" % "1.4.2"
-    val circe = "com.kyleu" %% "sangria-circe" % "1.2.1"
+    val sangria = "org.sangria-graphql" %% "sangria" % "2.0.0"
+    val circe = "org.sangria-graphql" %% "sangria-circe" % "1.3.0"
   }
 
   object Serialization {
@@ -80,14 +80,14 @@ object Dependencies {
   }
 
   object Metrics {
-    val version = "1.3.2"
+    val version = "1.5.5"
     val micrometerCore = "io.micrometer" % "micrometer-core" % version
     val micrometerPrometheus = "io.micrometer" % "micrometer-registry-prometheus" % version
     val micrometerStatsd = "io.micrometer" % "micrometer-registry-statsd" % version
   }
 
   object Tracing {
-    val version = "1.1.0"
+    val version = "1.4.0"
     val jaegerCore = "io.jaegertracing" % "jaeger-core" % version
     val jaegerThrift = "io.jaegertracing" % "jaeger-thrift" % version
     val jaegerMetrics = "io.jaegertracing" % "jaeger-micrometer" % version
@@ -95,7 +95,7 @@ object Dependencies {
   }
 
   object Authentication {
-    private[this] val version = "6.1.1"
+    private[this] val version = "7.0.0"
     val silhouette = "com.mohiva" %% "play-silhouette" % version excludeAll ExclusionRule(organization = "com.atlassian.jwt")
     val hasher = "com.mohiva" %% "play-silhouette-password-bcrypt" % version excludeAll ExclusionRule(organization = "com.atlassian.jwt")
     val persistence = "com.mohiva" %% "play-silhouette-persistence" % version excludeAll ExclusionRule(organization = "com.atlassian.jwt")
